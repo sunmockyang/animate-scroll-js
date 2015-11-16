@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>animateScroll.js</title>
+	<style type="text/css">
+	.navItem {
+		float: left;
+		width: 2rem;
+		height: 2rem;
+		background-color: #DDD;
+		font-family: Arial, Helvetica, sans;
+		margin-right: 10px;
+		text-align: center;
+	}
+
+	.scrollToItem {
+		height: 3em;
+	}
+	</style>
+</head>
+<body>
+<h1>Scroll to any of these elements</h1>
+<div id="navBar"></div>
+<script type="text/javascript">
+var numElements = 10;
+var maxWidth = 500;
+var maxHeight = 500;
+
+function main() {
+	var navBar = document.getElementById('navBar');
+
+	for (var i = 0; i < numElements; i++) {
+		var color = randomColor();
+
+		var navLink = createNavLink(i, color);
+		navBar.appendChild(navLink);
+
+		addRandomSpaces(document.body);
+
+		var pageItem = createScrollToElement(i, color);
+		document.body.appendChild(pageItem);
+
+		// animateScroll.js
+		navLink.onclick = (function() {
+			animateScroll(this);
+		}).bind(pageItem);
+	};
+}
+
+function createNavLink (i, color) {
+	var navLink = document.createElement("a");
+	navLink.href = "#" + i;
+
+	var navLinkDiv = document.createElement("div");
+	navLinkDiv.classList.add("navItem");
+	navLinkDiv.style.backgroundColor = color;
+	navLinkDiv.innerHTML = i;
+
+	navLink.appendChild(navLinkDiv);
+
+	return navLink;
+}
+
+function createScrollToElement(i, color) {
+	var scrollToItem = document.createElement("h1");
+	scrollToItem.classList.add("scrollToItem");
+	scrollToItem.innerHTML = i;
+	scrollToItem.style.backgroundColor = color;
+	return scrollToItem;
+}
+
+function addRandomSpaces(element) {
+	var randomLines = Math.floor(Math.random() * 20);
+	for (var j = 0; j < randomLines; j++) {
+		element.appendChild(document.createElement("br"));
+	};
+}
+
+function randomColor() {
+	var arr = [Math.floor(Math.random() * 50 + 205), Math.floor(Math.random() * 50 + 205), Math.floor(Math.random() * 50 + 205)];
+	return "rgb(" + arr.join() + ")";
+}
+
+window.onload = main;
+
+</script>
+<script type="text/javascript" src="../animateScroll.js"></script>
+</body>
+</html>
