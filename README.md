@@ -1,4 +1,4 @@
-Animate Scroll
+AnimateScroll.js
 =====================
 Lightweight javascript library to animate vertical scrolling to a specified element without jQuery.
 
