@@ -3,7 +3,7 @@
 
 function animateScroll(element, duration, easing, padding, onFinish) {
 	var top = element.getBoundingClientRect().top;
-	var targetY = top - ((padding) ? padding : 0);
+	var targetY = top - ((padding) ? padding : 0) + window.scrollY;
 	targetY = (window.scrollMaxY > targetY) ? targetY : window.scrollMaxY;
 	var deltaY = targetY - window.scrollY;
 
