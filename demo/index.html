@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>animateScroll.js</title>
+	<title>AnimateScroll.js - Sunmock Yang</title>
 	<style type="text/css">
 	.navItem {
 		float: left;
@@ -11,22 +11,73 @@
 		font-family: Arial, Helvetica, sans;
 		margin-right: 10px;
 		text-align: center;
+		font-size: 1.5rem;
+	}
+
+	.navItem:hover{
+		font-weight: bold;
 	}
 
 	.scrollToItem {
 		height: 3em;
 	}
+
+	.code {
+		background-color: #DDD;
+		font-family: monospace;
+		padding: 0.2rem;
+	}
+
+	p {
+		font-style: italic;
+	}
 	</style>
 </head>
 <body>
-<h1>Scroll to any of these elements</h1>
+<h1>AnimateScroll.js</h1>
+<p><a href="https://github.com/sunmockyang">Sunmock Yang</a>, November 2015</p>
+
+<div>
+Duration(ms): <input id="duration-input" type="text" value="1000" onkeyup="updateExampleCode()"/>
+<br/>
+Easing:
+<select id="easing-input" onchange="updateExampleCode()">
+	<option value="linear">linear</option>
+	<option value="easeInQuad">easeInQuad</option>
+	<option value="easeOutQuad">easeOutQuad</option>
+	<option value="easeInOutQuad">easeInOutQuad</option>
+	<option value="easeInCubic">easeInCubic</option>
+	<option value="easeOutCubic">easeOutCubic</option>
+	<option value="easeInOutCubic">easeInOutCubic</option>
+	<option value="easeInQuart">easeInQuart</option>
+	<option value="easeOutQuart">easeOutQuart</option>
+	<option value="easeInOutQuart">easeInOutQuart</option>
+	<option value="easeInQuint">easeInQuint</option>
+	<option value="easeOutQuint">easeOutQuint</option>
+	<option value="easeInOutQuint" selected="selected">easeInOutQuint</option>
+</select>
+<br/>
+Padding(px): <input id="padding-input" type="text" value="10" onkeyup="updateExampleCode()"/>
+</div>
+
+<br/>
+<div>
+Code: 
+<span id="example" class="code"></span>
+</div>
+
+<p>Click to scroll to any of these elements</p>
 <div id="navBar"></div>
 <script type="text/javascript">
 var numElements = 10;
 var maxWidth = 500;
 var maxHeight = 500;
 
+var duration, easing, padding;
+
 function main() {
+	updateExampleCode();
+
 	var navBar = document.getElementById('navBar');
 
 	for (var i = 0; i < numElements; i++) {
@@ -42,9 +93,17 @@ function main() {
 
 		// animateScroll.js
 		navLink.onclick = (function() {
-			animateScroll(this);
+			animateScroll(this, duration, easing, padding, function () {console.log("finished");});
 		}).bind(pageItem);
 	};
+}
+
+function updateExampleCode () {
+	duration = document.getElementById("duration-input").value;
+	easing = document.getElementById("easing-input").value;
+	padding = document.getElementById("padding-input").value;
+
+	document.getElementById("example").innerHTML = "animateScroll(element, " + duration + ", '" + easing + "', " + padding + ", onFinish);";
 }
 
 function createNavLink (i, color) {
@@ -70,7 +129,7 @@ function createScrollToElement(i, color) {
 }
 
 function addRandomSpaces(element) {
-	var randomLines = Math.floor(Math.random() * 20);
+	var randomLines = Math.floor(Math.random() * 20) + 1;
 	for (var j = 0; j < randomLines; j++) {
 		element.appendChild(document.createElement("br"));
 	};
@@ -84,6 +143,6 @@ function randomColor() {
 window.onload = main;
 
 </script>
-<script type="text/javascript" src="../animateScroll.js"></script>
+<script type="text/javascript" src="../AnimateScroll.js"></script>
 </body>
 </html>
