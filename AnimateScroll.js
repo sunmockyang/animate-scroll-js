@@ -2,10 +2,14 @@
 // Sunmock Yang Nov. 2015
 
 function animateScroll(element, duration, easing, padding, onFinish) {
+	var maxScroll = ( 'scrollMaxY' in window ) ? window.scrollMaxY : (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+	
 	var top = element.getBoundingClientRect().top;
-	var targetY = top - ((padding) ? padding : 0) + window.scrollY;
-	targetY = (window.scrollMaxY > targetY) ? targetY : window.scrollMaxY;
-	var deltaY = targetY - window.scrollY;
+	var currentY = window.scrollY;
+	var targetY = top - ((padding) ? padding : 0) + currentY;
+	targetY = (maxScroll > targetY) ? targetY : maxScroll;
+	
+	var deltaY = targetY - currentY;
 
 	var obj = {
 		targetY: targetY,
@@ -14,7 +18,7 @@ function animateScroll(element, duration, easing, padding, onFinish) {
 		easing: (easing in animateScroll.Easing) ? animateScroll.Easing[easing] : animateScroll.Easing.linear,
 		onFinish: onFinish,
 		startTime: Date.now(),
-		lastY: window.scrollY,
+		lastY: currentY,
 		step: animateScroll.step,
 	};
 
