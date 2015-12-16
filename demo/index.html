@@ -60,7 +60,14 @@ Easing:
 <br/>
 Padding(px): <input id="padding-input" type="text" value="10" onkeyup="updateExampleCode()"/>
 </div>
+Align:
+<select id="align-input" onchange="updateExampleCode()">
+	<option value="top">top</option>
+	<option value="center">center</option>
+	<option value="bottom">bottom</option>
+</select>
 
+<br/>
 <br/>
 <div>
 Code: 
@@ -74,7 +81,7 @@ var numElements = 10;
 var maxWidth = 500;
 var maxHeight = 500;
 
-var duration, easing, padding;
+var duration, easing, padding, align;
 
 function main() {
 	updateExampleCode();
@@ -94,7 +101,7 @@ function main() {
 
 		// animateScroll.js
 		navLink.onclick = (function() {
-			animateScroll(this, duration, easing, padding, function () {console.log("finished");});
+			animateScroll(this, duration, easing, padding, align, function () {console.log("finished");});
 		}).bind(pageItem);
 	};
 }
@@ -102,9 +109,10 @@ function main() {
 function updateExampleCode () {
 	duration = document.getElementById("duration-input").value;
 	easing = document.getElementById("easing-input").value;
-	padding = document.getElementById("padding-input").value;
+	padding = Number(document.getElementById("padding-input").value);
+	align = document.getElementById("align-input").value;
 
-	document.getElementById("example").innerHTML = "animateScroll(element, " + duration + ", '" + easing + "', " + padding + ", onFinish);";
+	document.getElementById("example").innerHTML = "animateScroll(element, " + duration + ", '" + easing + "', " + padding + ", " + align + ", onFinish);";
 }
 
 function createNavLink (i, color) {

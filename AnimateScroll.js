@@ -1,13 +1,31 @@
 // AnimateScroll.js
 // Sunmock Yang Nov. 2015
 
-function animateScroll(element, duration, easing, padding, onFinish) {
-	var maxScroll = ( 'scrollMaxY' in window ) ? window.scrollMaxY : (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-	
-	var top = element.getBoundingClientRect().top;
+function animateScroll(element, duration, easing, padding, align, onFinish) {
+	var docElem = document.documentElement; // to facilitate minification better
+	var windowHeight = docElem.clientHeight;
+	var maxScroll = ( 'scrollMaxY' in window ) ? window.scrollMaxY : (docElem.scrollHeight - windowHeight);
 	var currentY = window.scrollY;
-	var targetY = top - ((padding) ? padding : 0) + currentY;
-	targetY = (maxScroll > targetY) ? targetY : maxScroll;
+
+	var targetY = currentY;
+	var elementBounds = element.getBoundingClientRect();
+	var elementPos = 0;
+
+	if (align == "center") {
+		elementPos = elementBounds.top + elementBounds.height/2;
+		targetY -= windowHeight / 2;
+	}
+	else if (align == "bottom") {
+		elementPos = elementBounds.bottom;
+		targetY -= windowHeight;
+		targetY += (padding) ? padding : 0;
+	}
+	else { // top, undefined
+		elementPos = elementBounds.top;
+		targetY -= (padding) ? padding : 0;
+	}
+	targetY += elementPos;
+	targetY = Math.max(Math.min(maxScroll, targetY), 0);
 	
 	var deltaY = targetY - currentY;
 
