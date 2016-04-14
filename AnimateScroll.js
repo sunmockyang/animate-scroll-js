@@ -5,7 +5,7 @@ function animateScroll(element, duration, easing, padding, align, onFinish) {
 	var docElem = document.documentElement; // to facilitate minification better
 	var windowHeight = docElem.clientHeight;
 	var maxScroll = ( 'scrollMaxY' in window ) ? window.scrollMaxY : (docElem.scrollHeight - windowHeight);
-	var currentY = window.scrollY;
+	var currentY = window.pageYOffset;
 
 	var targetY = currentY;
 	var elementBounds = element.getBoundingClientRect();
@@ -62,7 +62,7 @@ animateScroll.Easing = {
 };
 
 animateScroll.step = function () {
-	if (this.lastY != window.scrollY && this.onFinish) {
+	if (this.lastY != window.pageYOffset && this.onFinish) {
 		this.onFinish();
 		return;
 	}
@@ -72,11 +72,11 @@ animateScroll.step = function () {
 
 	// Scroll window amount determined by easing
 	var y = this.targetY - ((1 - this.easing(t)) * (this.deltaY));
-	window.scrollTo(window.scrollX, y);
+	window.scrollTo(window.pageXOffset, y);
 
 	// Continue animation as long as duration hasn't surpassed
 	if (t != 1) {
-		this.lastY = window.scrollY;
+		this.lastY = window.pageYOffset;
 		window.requestAnimationFrame(this.step.bind(this));
 	} else {
 		if (this.onFinish) this.onFinish();
