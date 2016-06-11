@@ -1,30 +1,30 @@
 // AnimateScroll.js
 // Sunmock Yang Nov. 2015
 
-function animateScroll(element, duration, easing, padding, align, onFinish) {
+function animateScroll(target, duration, easing, padding, align, onFinish) {
+	padding = padding ? padding : 0;
 	var docElem = document.documentElement; // to facilitate minification better
 	var windowHeight = docElem.clientHeight;
 	var maxScroll = ( 'scrollMaxY' in window ) ? window.scrollMaxY : (docElem.scrollHeight - windowHeight);
 	var currentY = window.pageYOffset;
 
 	var targetY = currentY;
-	var elementBounds = element.getBoundingClientRect();
-	var elementPos = 0;
+	var elementBounds = isNaN(target) ? target.getBoundingClientRect() : 0;
 
-	if (align == "center") {
-		elementPos = elementBounds.top + elementBounds.height/2;
+	if (align === "center") {
+		targetY += isNaN(target) ? (elementBounds.top + elementBounds.height/2) : target;
 		targetY -= windowHeight / 2;
+		targetY -= padding
 	}
-	else if (align == "bottom") {
-		elementPos = elementBounds.bottom;
+	else if (align === "bottom") {
+		targetY += elementBounds.bottom || target;
 		targetY -= windowHeight;
-		targetY += (padding) ? padding : 0;
+		targetY += padding
 	}
 	else { // top, undefined
-		elementPos = elementBounds.top;
-		targetY -= (padding) ? padding : 0;
+		targetY += elementBounds.top || target;
+		targetY -= padding
 	}
-	targetY += elementPos;
 	targetY = Math.max(Math.min(maxScroll, targetY), 0);
 	
 	var deltaY = targetY - currentY;
@@ -62,7 +62,7 @@ animateScroll.Easing = {
 };
 
 animateScroll.step = function () {
-	if (this.lastY != window.pageYOffset && this.onFinish) {
+	if (this.lastY !== window.pageYOffset && this.onFinish) {
 		this.onFinish();
 		return;
 	}
@@ -72,10 +72,10 @@ animateScroll.step = function () {
 
 	// Scroll window amount determined by easing
 	var y = this.targetY - ((1 - this.easing(t)) * (this.deltaY));
-	window.scrollTo(window.pageXOffset, y);
+	window.scrollTo(window.scrollX, y);
 
 	// Continue animation as long as duration hasn't surpassed
-	if (t != 1) {
+	if (t !== 1) {
 		this.lastY = window.pageYOffset;
 		window.requestAnimationFrame(this.step.bind(this));
 	} else {

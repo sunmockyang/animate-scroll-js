@@ -4,12 +4,13 @@ Lightweight javascript library to animate vertical scrolling to a specified elem
 
 ## Usage
 ```javascript
-animateScroll(element, duration, easing, padding, onFinish)
+animateScroll(target, duration, easing, padding, align, onFinish)
 ```
-- ```element``` Specifies the DOM element to scroll to
+- ```target``` Specifies the DOM element, or a page offset value (px) to scroll to
 - ```duration``` How long the scroll animation lasts in milliseconds. Default: 0.
 - ```easing``` Easing type for scroll animation. See below for options Default: linear. (string)
 - ```padding``` How much space in pixels from the top of the specified element to scroll to. Default: 0
+- ```align``` Can be set to `"top"`, `"center"`, `"bottom"` and scroll will animate to the target aligned as specified within the window. Default `"top"` (string)
 - ```onFinish``` Callback function to run when the animation is finished or cancelled.
 
 ## Easing
