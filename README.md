@@ -2,6 +2,8 @@ AnimateScroll.js
 =====================
 Lightweight javascript library to animate vertical scrolling to a specified element without jQuery.
 
+Click [here](http://sunmockyang.github.io/animate-scroll-js/demo) for a demo
+
 ## Usage
 ```javascript
 animateScroll(target, duration, easing, padding, align, onFinish)
