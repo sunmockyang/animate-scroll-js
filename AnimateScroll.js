@@ -8,7 +8,7 @@ function animateScroll(target, duration, easing, padding, align, onFinish) {
 	var maxScroll = ( 'scrollMaxY' in window ) ? window.scrollMaxY : (docElem.scrollHeight - windowHeight);
 	var currentY = window.pageYOffset;
 
-	var targetY = currentY;
+	var targetY = isNaN(target) ? currentY : target;
 	var elementBounds = isNaN(target) ? target.getBoundingClientRect() : 0;
 
 	if (align === "center") {
