@@ -62,8 +62,8 @@ animateScroll.Easing = {
 };
 
 animateScroll.step = function () {
-	if (this.lastY !== window.pageYOffset && this.onFinish) {
-		this.onFinish();
+	if (this.lastY !== window.pageYOffset) {
+		this.onFinish && this.onFinish();
 		return;
 	}
 
