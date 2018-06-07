@@ -35,3 +35,4 @@ The types of easing available. Easing functions taken from: https://gist.github.
 - If the user manually scrolls during the scroll animation, the animation will cancel and the onFinish function will run
 - Only the element argument is mandatory. Rest are optional with default values.
 - This was created after I couldn't find anywhere online a library that can scroll smoothly without jQuery
+- Currently if smooth-scrolling is enabled, it will interfere with the scroll animations. Disable smooth-scrolling while the animation is playing
